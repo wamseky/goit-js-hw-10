@@ -10,38 +10,60 @@ form.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
 
-  return createPromise(fieldset.children.value, delay.textContent);
+  return createPromise(fieldset.children.value, delay.textContent)
+    .then(
+      iziToast.show({
+        title: '✅',
+        message: `Fulfilled promise in ${delay}ms`,
+        position: 'topRight',
+        color: '#B5EA7C',
+        messageColor: '#ffffff',
+        close: false,
+        closeOnClick: true,
+        progressBar: false,
+      })
+    )
+    .catch(
+      iziToast.show({
+        title: '❌',
+        message: `Rejected promise in ${delay}ms`,
+        position: 'topRight',
+        color: '#FFBEBE',
+        messageColor: '#ffffff',
+        close: false,
+        closeOnClick: true,
+        progressBar: false,
+      })
+    );
 }
 
 function createPromise(prop, delay) {
   return new Promise((res, rej) => {
     setTimeout(() => {
       if (prop === 'fulfilled') {
-        res(
-          iziToast.show({
-            title: '✅',
-            message: `Fulfilled promise in ${delay}ms`,
-            position: 'topRight',
-            color: '#B5EA7C',
-            messageColor: '#ffffff',
-            close: false,
-            closeOnClick: true,
-            progressBar: false,
-          })
-        );
+        res();
+        //   iziToast.show({
+        //     title: '✅',
+        //     message: `Fulfilled promise in ${delay}ms`,
+        //     position: 'topRight',
+        //     color: '#B5EA7C',
+        //     messageColor: '#ffffff',
+        //     close: false,
+        //     closeOnClick: true,
+        //     progressBar: false,
+        //   })
       } else {
-        rej(
-          iziToast.show({
-            title: '❌',
-            message: `Rejected promise in ${delay}ms`,
-            position: 'topRight',
-            color: '#FFBEBE',
-            messageColor: '#ffffff',
-            close: false,
-            closeOnClick: true,
-            progressBar: false,
-          })
-        );
+        rej();
+        //   iziToast.show({
+        //     title: '❌',
+        //     message: `Rejected promise in ${delay}ms`,
+        //     position: 'topRight',
+        //     color: '#FFBEBE',
+        //     messageColor: '#ffffff',
+        //     close: false,
+        //     closeOnClick: true,
+        //     progressBar: false,
+        //   })
       }
     }, delay);
   });
