@@ -2,7 +2,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
-const delay = document.querySelector('.delay');
+const delayInput = document.querySelector('.delay');
 const fieldset = document.querySelector('fieldset');
 
 form.addEventListener('submit', onSubmit);
@@ -11,9 +11,9 @@ function onSubmit(evt) {
   evt.preventDefault();
 
   const delay = evt.currentTarget.elements.delay.value;
-  const prop = evt.currentTarget.elements.state.value
+  const promiseState = evt.currentTarget.elements.state.value
 
-  createPromise(prop, delay)
+  createPromise(promiseState, delay)
     .then((res) =>
         iziToast.show({
           title: '✅',
@@ -42,10 +42,10 @@ function onSubmit(evt) {
       evt.currentTarget.reset();
 }
 
-function createPromise(prop, delay) {
+function createPromise(promiseState, delay) {
   return new Promise((res, rej) => {
     setTimeout(() => {
-      if (prop === 'fulfilled') {
+      if (promiseState === 'fulfilled') {
         res();
       } else {
         rej();
