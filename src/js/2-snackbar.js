@@ -17,7 +17,7 @@ function onSubmit(evt) {
     .then((res) =>
         iziToast.show({
           title: '✅',
-          message: `Fulfilled promise in ${delay}ms`,
+          message: `Fulfilled promise in ${res.delay}ms`,
           position: 'topRight',
           color: '#B5EA7C',
           messageColor: '#ffffff',
@@ -26,10 +26,10 @@ function onSubmit(evt) {
           progressBar: false,
         })
       )
-      .catch((rej) =>
+      .catch((error) =>
         iziToast.show({
           title: '❌',
-          message: `Rejected promise in ${delay}ms`,
+          message: `Rejected promise in ${error.delay}ms`,
           position: 'topRight',
           color: '#FFBEBE',
           messageColor: '#ffffff',
@@ -46,9 +46,9 @@ function createPromise(promiseState, delay) {
   return new Promise((res, rej) => {
     setTimeout(() => {
       if (promiseState === 'fulfilled') {
-        res();
+        res({delay});
       } else {
-        rej();
+        rej({delay});
       }
     }, delay);
   });
